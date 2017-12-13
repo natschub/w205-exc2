@@ -7,23 +7,22 @@ conn = psycopg2.connect(database="tcount", user="postgres", password="pass", hos
 cur = conn.cursor()
 
 if len(sys.argv) !=2:
-	cur.execute("SELECT word, count from tweetwordcount")
+	cur.execute("SELECT word, count from tweetwordcount order by word ASC")
 	records=cur.fetchall()
 	for rec in records:
-		print "word = ", rec[0]
-   		print "count = ", rec[1], "\n"
+		print ( rec[0], rec[1])
 	conn.commit()
 	conn.close
 
 else:
 	word = sys.argv[1]
 
-	cur.execute("SELECT word, count from tweetwordcount")
+	cur.execute("SELECT word, count from tweetwordcount order by word ASC")
 	records=cur.fetchall()
+	
 	for rec in records:
 		if rec[0]==word:
-			print "word=", rec[0]
-			print "count=", rec[1]
+			print (rec[0], rec[1])
 
 	conn.commit()
 	conn.close

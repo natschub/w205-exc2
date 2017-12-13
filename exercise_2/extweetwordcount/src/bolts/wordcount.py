@@ -10,7 +10,7 @@ class WordCounter(Bolt):
 
     def initialize(self, conf, ctx):
         self.counts = Counter()
-	self.conn = psycopg2.connect(database="postgres", user="postgres", password="pass", host="localhost", port="5432")
+	self.conn = psycopg2.connect(database="tcount", user="postgres", password="pass", host="localhost", port="5432")
 
     def process(self, tup):
         word = tup.values[0]
@@ -18,7 +18,7 @@ class WordCounter(Bolt):
 	cur.execute("UPDATE tweetwordcount SET count=count+1 WHERE word=%s", (word,))
 	
 	if cur.rowcount == 0:
-		cur.execute("INSERT INTO tweetwordcount (word,count) VALUES (%s, 1", (word,))
+		cur.execute("INSERT INTO tweetwordcount (word,count) VALUES (%s, 1)", (word,))
 
 	self.conn.commit()
 
